@@ -3,11 +3,14 @@
     use Illuminate\Http\Resources\Json\JsonResource;
     use LibUser\Userapi\Http\Resources\UserResource;
 
-    class ArrivalResource extends JsonResource {
+    class AuthResource extends JsonResource {
 
         public function toArray($request) {
             return [
-                "id" => $this->id
+                "id" => $this->id,
+                "username" => $this->username,
+                "email" => $this->email,
+                "created_at" => $this->created_at,
             ];
         }
         

@@ -6,7 +6,6 @@ use AppAuth\Auth\Models\Auth;
 use AppAuth\Auth\Http\Resources\AuthResource;
 use RainLab\User\Models\User;
 use RainLab\User\Facades\Auth as RainLabAuth;
-use October\Rain\Auth\Manager;
 
 class AuthController extends Controller
 {
@@ -14,8 +13,6 @@ class AuthController extends Controller
     {
         $data = request()->all();
         $user = RainLabAuth::authenticate($data, true);
-        /* $user = new RainLabAuth();
-        $user->authenticate($data); */
         return AuthResource::make($user);
     }
     public function register()

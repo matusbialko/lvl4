@@ -32,7 +32,8 @@
         "october/cms": "1.1.*",
         "laravel/framework": "~6.0",
         "rainlab/user-plugin": "1.7.2",
-        "guzzlehttp/guzzle": "~5.0"
+        "guzzlehttp/guzzle": "~6.0",
+        "laravel/socialite": "^5.16"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.4|^9.3.3",

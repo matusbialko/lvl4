@@ -6,24 +6,51 @@ use AppAuth\Google\Http\Resources\GoolgeResource;
 use RainLab\User\Models\User;
 use RainLab\User\Facades\Auth as RainLabAuth;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
 {
-    public function redirect()
+    public function redirectToGoogle()
     {
-        $query = http_build_query([
-            'client_id'     => env('GOOGLE_CLIENT_ID'),
-            'redirect_uri'  => env('GOOGLE_REDIRECT'),
-            'response_type' => 'code',
-            'scope'         => 'email profile',
-            'access_type'   => 'offline',
-        ]);
-
-        return redirect("https://accounts.google.com/o/oauth2/v2/auth?$query");
+        return Socialite::driver('google')->redirect();
     }
-    public function callback()
+    public function handleGoogleCallback()
     {
-        $data = request()->all();
-        return $data;
+        try {
+            $googleUser = Socialite::driver('google')->user();
+            $user = User::where('email', $googleUser->getEmail())->first();
+
+            if (!Schema::hasColumn('users', 'google_token')) {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->text('google_token')->nullable();
+                    $table->text('google_refresh_token')->nullable();
+                });
+            }
+            
+            if (!$user) {
+                // Register the user if not found
+                $randomPassword = str_random(16);
+                $user = RainLabAuth::register([
+                    'email' => $googleUser->getEmail(),
+                    'password' => $randomPassword,
+                    'password_confirmation' => $randomPassword,
+                ]);
+                $user->is_activated = true;
+                $user->save();
+            }
+            
+            // Update tokens
+            $user->google_token = $googleUser->token;
+            $user->google_refresh_token = $googleUser->refreshToken;
+            $user->save();
+            
+            RainLabAuth::login($user);
+
+            return redirect('/');
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

@@ -157,6 +157,7 @@ return [
         // 'Illuminate\Html\HtmlServiceProvider', // Example
 
         'System\ServiceProvider',
+        Laravel\Socialite\SocialiteServiceProvider::class
     ]),
 
     /*
@@ -193,7 +194,7 @@ return [
     'aliases' => array_merge(include(base_path('modules/system/aliases.php')), [
 
         // 'Str' => 'Illuminate\Support\Str', // Example
-
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class
     ]),
 
 ];

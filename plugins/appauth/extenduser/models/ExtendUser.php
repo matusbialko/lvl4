@@ -1,18 +1,18 @@
-<?php namespace AppAuth\Auth\Models;
+<?php namespace AppAuth\ExtendUser\Models;
 
 use Model;
 
 /**
- * Auth Model
+ * ExtendUser Model
  */
-class Auth extends Model
+class ExtendUser extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'appauth_auth_auths';
+    public $table = 'appauth_extenduser_extend_users';
 
     /**
      * @var array Guarded fields
@@ -22,7 +22,12 @@ class Auth extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'google_token',
+        'google_refresh_token',
+        'slack_id',
+        'slack_webhook_url',
+    ];
 
     /**
      * @var array Validation rules for attributes

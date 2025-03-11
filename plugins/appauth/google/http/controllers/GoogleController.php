@@ -6,8 +6,6 @@ use AppAuth\Google\Http\Resources\GoolgeResource;
 use RainLab\User\Models\User;
 use RainLab\User\Facades\Auth as RainLabAuth;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
@@ -21,13 +19,6 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
             $user = User::where('email', $googleUser->getEmail())->first();
-
-            if (!Schema::hasColumn('users', 'google_token')) {
-                Schema::table('users', function (Blueprint $table) {
-                    $table->text('google_token')->nullable();
-                    $table->text('google_refresh_token')->nullable();
-                });
-            }
             
             if (!$user) {
                 // Register the user if not found

@@ -2,10 +2,9 @@
 
 use Exception;
 use Illuminate\Routing\Controller;
-use AppAuth\Google\Http\Resources\GoolgeResource;
 use RainLab\User\Models\User;
+use AppAuth\Auth\Http\Controllers\AuthController;
 use RainLab\User\Facades\Auth as RainLabAuth;
-use GuzzleHttp\Client;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
@@ -19,25 +18,35 @@ class GoogleController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
             $user = User::where('email', $googleUser->getEmail())->first();
-            
+            $authController = new AuthController();
+            $randomPassword = str_random(16);
+
             if (!$user) {
                 // Register the user if not found
-                $randomPassword = str_random(16);
-                $user = RainLabAuth::register([
+                $payload = [
                     'email' => $googleUser->getEmail(),
                     'password' => $randomPassword,
                     'password_confirmation' => $randomPassword,
-                ]);
-                $user->is_activated = true;
-                $user->save();
+                ];
+                // Mock the request data
+                request()->merge($payload);
+                $user = $authController->register($payload);
+                
             }
             
             // Update tokens
             $user->google_token = $googleUser->token;
             $user->google_refresh_token = $googleUser->refreshToken;
+            $user->password = $randomPassword;
+            $user->password_confirmation = $randomPassword;
             $user->save();
-            
-            RainLabAuth::login($user);
+
+            $loginPayload = [
+                'email' => $googleUser->getEmail(),
+                'password' => $randomPassword,
+            ];
+            request()->merge($loginPayload);
+            $authController->login($loginPayload);
 
             return redirect('/');
         } catch (\Exception $e) {

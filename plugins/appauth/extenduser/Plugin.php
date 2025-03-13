@@ -3,7 +3,6 @@
 use Backend;
 use System\Classes\PluginBase;
 use AppAuth\ExtendUser\Models\ExtendUser;
-use RainLab\User\Controllers\Users as UsersController;
 
 /**
  * ExtendUser Plugin Information File

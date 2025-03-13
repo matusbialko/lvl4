@@ -1,7 +1,6 @@
 <?php namespace AppAuth\Auth\Http\Resources;
 
     use Illuminate\Http\Resources\Json\JsonResource;
-    use LibUser\Userapi\Http\Resources\UserResource;
 
     class AuthResource extends JsonResource {
 

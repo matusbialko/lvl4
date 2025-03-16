@@ -25,16 +25,6 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Register method, called when the plugin is first registered.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
-    }
-
-    /**
      * Boot method, called right before the request route.
      *
      * @return array
@@ -58,8 +48,6 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-        return []; // Remove this line to activate
-
         return [
             'AppAuth\ExtendUser\Components\MyComponent' => 'myComponent',
         ];
@@ -72,8 +60,6 @@ class Plugin extends PluginBase
      */
     public function registerPermissions()
     {
-        return []; // Remove this line to activate
-
         return [
             'appauth.extenduser.some_permission' => [
                 'tab' => 'ExtendUser',
@@ -89,8 +75,6 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-        return []; // Remove this line to activate
-
         return [
             'extenduser' => [
                 'label'       => 'ExtendUser',

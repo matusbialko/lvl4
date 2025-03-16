@@ -24,34 +24,12 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Register method, called when the plugin is first registered.
-     *
-     * @return void
-     */
-    public function register()
-    {
-
-    }
-
-    /**
-     * Boot method, called right before the request route.
-     *
-     * @return array
-     */
-    public function boot()
-    {
-
-    }
-
-    /**
      * Registers any front-end components implemented in this plugin.
      *
      * @return array
      */
     public function registerComponents()
     {
-        return []; // Remove this line to activate
-
         return [
             'AppAuth\Google\Components\MyComponent' => 'myComponent',
         ];
@@ -64,8 +42,6 @@ class Plugin extends PluginBase
      */
     public function registerPermissions()
     {
-        return []; // Remove this line to activate
-
         return [
             'appauth.google.some_permission' => [
                 'tab' => 'Google',
@@ -81,8 +57,6 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-        return []; // Remove this line to activate
-
         return [
             'google' => [
                 'label'       => 'Google',

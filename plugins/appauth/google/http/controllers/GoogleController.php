@@ -31,15 +31,15 @@ class GoogleController extends Controller
                 // Mock the request data
                 request()->merge($payload);
                 $user = $authController->register($payload);
-                
             }
-            
+
             // Update tokens
-            $user->google_token = $googleUser->token;
-            $user->google_refresh_token = $googleUser->refreshToken;
-            $user->password = $randomPassword;
-            $user->password_confirmation = $randomPassword;
-            $user->save();
+            $user->update([
+                'google_token' => $googleUser->token,
+                'google_refresh_token' => $googleUser->refreshToken,
+                'password' => $randomPassword,
+                'password_confirmation' => $randomPassword,
+            ]);
 
             $loginPayload = [
                 'email' => $googleUser->getEmail(),

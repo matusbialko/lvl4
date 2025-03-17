@@ -25,23 +25,6 @@ class Plugin extends PluginBase
     }
 
     /**
-     * Boot method, called right before the request route.
-     *
-     * @return array
-     */
-    public function boot()
-    {
-        ExtendUser::extend(function ($model) {
-            $model->addFillable([
-                'google_token',
-                'google_refresh_token',
-                'slack_id',
-                'slack_webhook_url',
-            ]);
-        });
-    }
-
-    /**
      * Registers any front-end components implemented in this plugin.
      *
      * @return array

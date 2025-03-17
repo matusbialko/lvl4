@@ -1,20 +1,18 @@
 <?php namespace AppAuth\Auth\Http\Controllers;
 
-use Exception;
 use Illuminate\Routing\Controller;
 use AppAuth\Auth\Http\Resources\AuthResource;
-use RainLab\User\Models\User;
 use RainLab\User\Facades\Auth as RainLabAuth;
 
 class AuthController extends Controller
 {
-    public function login()
+    public static function login()
     {
         $data = request()->only(['email', 'password']);
         $user = RainLabAuth::authenticate($data, true);
         return AuthResource::make($user);
     }
-    public function register()
+    public static function register()
     {
         $data = request()->all();
         $user = RainLabAuth::register($data);

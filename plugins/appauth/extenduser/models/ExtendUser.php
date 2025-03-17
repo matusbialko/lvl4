@@ -1,11 +1,11 @@
 <?php namespace AppAuth\ExtendUser\Models;
 
-use Model;
+use RainLab\User\Models\User as RainLabUser;
 
 /**
  * ExtendUser Model
  */
-class ExtendUser extends Model
+class ExtendUser extends RainLabUser
 {
     use \October\Rain\Database\Traits\Validation;
 
